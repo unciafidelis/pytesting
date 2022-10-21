@@ -36,11 +36,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          cd key_generator/source
           pip install -r requirements-dev.txt
           pip install -e .
       - name: Run unit tests
         run: |
-          cd key_generator/scripts
+          cd /tests
           chmod +x run_tests.sh
           ./run_tests.sh
