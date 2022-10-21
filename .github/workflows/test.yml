@@ -21,7 +21,9 @@ jobs:
         run: python -c "import sys; print(sys.version)"
       - name: Test with pytest
         run: | 
+          pip install -e .
           pip install pytest
+          python -m pytest --import-mode=append tests/
       - name: Upload pytest test results
         uses: actions/upload-artifact@v3
         with:
