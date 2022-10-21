@@ -17,9 +17,13 @@ jobs:
           # Optional - x64 or x86 architecture, defaults to x64
           architecture: 'x64'
       # You can test your matrix by printing the current Python version
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
-      - run: pip install -r requirements.txt
-      - run: pip test
-      - name: Run unit tests
-        run: python -m pytest --import-mode=append tests/
+        run: |
+          - name: Display Python version
+          python -c "import sys; print(sys.version)"
+          - name: Install dependencies
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          - name: Test with pytest
+          pip install pytest
+          pip install pytest-cov
+          pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
