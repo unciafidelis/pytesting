@@ -22,7 +22,6 @@ jobs:
       - name: Test with pytest
         run: | 
           pip install pytest
-          make unit-test
       - name: Upload pytest test results
         uses: actions/upload-artifact@v3
         with:
