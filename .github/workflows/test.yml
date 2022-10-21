@@ -1,24 +1,16 @@
-name: Python package
-
-on: [push]
-
+on: push
 jobs:
   build:
-
+    strategy:
+      matrix:
+        python-version: [3.x]
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python 3.x
-        uses: actions/setup-python@v4
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
-          # Semantic version range syntax or exact version of a Python version
-          python-version: '3.x'
-          # Optional - x64 or x86 architecture, defaults to x64
-          architecture: 'x64'
-      # You can test your matrix by printing the current Python version
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
+          fetch-depth: 0
+          
       - name: Switch to Current Branch
         run: git checkout ${{ env.BRANCH }}
               
@@ -31,14 +23,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install -e .
-      - name: Test with pytest
-        run: | 
-          pip install pytest
-          python -m pytest --import-mode=append tests/
-      - name: Upload pytest test results
-        uses: actions/upload-artifact@v3
-        with:
-          name: pytest-results-${{ matrix.python-version }}
-          path: junit/test-results-${{ matrix.python-version }}.xml
-        # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }}
+      - name: Run unit tests
+        run: python -m pytest --import-mode=append tests/
