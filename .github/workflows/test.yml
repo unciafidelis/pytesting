@@ -32,6 +32,7 @@ jobs:
           python -m pip install pandas
           python -m pip install sklearn
           python -m pip install uproot
+          python -m pip install shap
           python -m pip install --upgrade pip
           pip install pytest
       - name: Run unit tests
