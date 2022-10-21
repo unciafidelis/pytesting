@@ -1,27 +1,30 @@
-on: push
+name: Python package
+
+on: [push]
+
 jobs:
   build:
-    strategy:
-      matrix:
-        python-version: [3.x]
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v4
         with:
-          fetch-depth: 0
-          
-      - name: Switch to Current Branch
-        run: git checkout ${{ env.BRANCH }}
-              
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+          # Semantic version range syntax or exact version of a Python version
+          python-version: '3.x'
+          # Optional - x64 or x86 architecture, defaults to x64
+          architecture: 'x64'
+      # You can test your matrix by printing the current Python version
+      - name: Display Python version and install dependencies
         run: |
+          python -c "import sys; print(sys.version)"
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install -e .
-      - name: Run unit tests
-        run: python -m pytest --import-mode=append tests/
+          pip test
+      - name: Test with pytest
+        run: |
+          pip install pytest
+          python -m pytest --import-mode=append tests/
+          
