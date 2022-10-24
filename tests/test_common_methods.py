@@ -11,7 +11,7 @@ from sklearn import datasets,tree
 # framework includes
 from data.data_preparation import DataPreparation
 
-data = DataPreparation(path="../data/", GA_selection=False)
+data = DataPreparation(path="../data", GA_selection=False)
 X_train, y_train, X_test, y_test = data.dataset(sample_name="titanic", sampling=False, split_sample=0.4)
 model = tree.DecisionTreeClassifier() # svm.SVC(kernel="sigmoid", gamma=1)
 workpath = os.getcwd()
