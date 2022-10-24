@@ -10,7 +10,7 @@ from sklearn.svm import SVC, LinearSVC
 from data.data_preparation import DataPreparation
 from common.common_methods import roc_curve_adaboost,plot_roc_curve
 
-data = DataPreparation(path="/data", GA_selection=False)
+data = DataPreparation(path="data", GA_selection=False)
 X_train, Y_train, X_test, Y_test = data.dataset(sample_name="titanic", sampling=False, split_sample=0.5)
 
 
